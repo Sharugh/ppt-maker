@@ -5,7 +5,6 @@ from pptx.util import Inches
 import requests
 from io import BytesIO
 from PIL import Image
-import os
 
 # Function to extract text from a Word document
 def extract_text_from_docx(file):
@@ -15,15 +14,16 @@ def extract_text_from_docx(file):
         full_text.append(para.text)
     return "\n".join(full_text)
 
-# Function to search for images using Unsplash API
+# Function to search for images using Pexels API
 def search_image(query):
-    access_key = "LnDqCT2BbahSLy0YduB4sfFyVC0P8EBnJREHaxsXBUs"  # Replace with your Unsplash API key
-    url = f"https://api.unsplash.com/search/photos?query={query}&client_id={access_key}"
-    response = requests.get(url)
+    api_key = "LnDqCT2BbahSLy0YduB4sfFyVC0P8EBnJREHaxsXBUs"  # Replace with your Pexels API key
+    url = f"https://api.pexels.com/v1/search?query={query}&per_page=1"
+    headers = {"Authorization": api_key}
+    response = requests.get(url, headers=headers)
     if response.status_code == 200:
         results = response.json()
-        if results["results"]:
-            return results["results"][0]["urls"]["regular"]  # Return the first image URL
+        if results["photos"]:
+            return results["photos"][0]["src"]["large"]  # Return the first image URL
     return None
 
 # Function to create a professional PPT with images
