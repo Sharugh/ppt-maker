@@ -2,6 +2,7 @@ streamlit
 python-docx
 python-pptx
 Pillow
+requests
 matplotlib
 pdfkit
 reportlab
